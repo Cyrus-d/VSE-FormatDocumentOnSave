@@ -12,7 +12,7 @@ There are 3 settings which you could configure:
 * Denied Extensions
 
 ### Command
-This is the Visual Studio command which will be invoked when a document is saved.
+This is the Visual Studio command which will be invoked when a document is saved. For multiple values you could use `space` separated list.
 ##### Default
 `Edit.FormatDocument`
 
@@ -47,21 +47,46 @@ Specifies all file extensions where the `command` is NOT allowed to be executed.
 
 ## Scenario 4
 - `allowed_extensions = .cs`
-- `denied_extensions = ` 
+- `denied_extensions = .*` 
 
 **Result:** Only documents with `.cs` extension will be formatted
+
+## Scenario 5
+- `allowed_extensions = .cs`
+- `denied_extensions =` 
+
+**Result:** All documents will be formatted because nothing is denied
+
+## Scenario 6
+- `allowed_extensions = .cs`
+- `denied_extensions = .cs` 
+
+**Result:** All documents will be formatted because there is a conflict 
 
 # Visual Studio
 You can configure these settings from the Visual Studio Options menu
 
 # Format Config
 
-`.formatconfig`
+Create a `.formatconfig` file in the root of your project 
+
+## Example
 ```
 root = true
 
 [*.*]
 command = Edit.FormatDocument
+allowed_extensions = .*
+denied_extensions = .js .html
+```
+
+## Example with multiple commands
+```
+root = true
+
+[*.*]
+
+command = Edit.FormatDocument Edit.FormatDocument
 allowed_extensions = .*
 denied_extensions = .js .html
 ```
